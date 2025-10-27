@@ -1,0 +1,857 @@
+/* ======== GLOBAL VARIABLES (Light & Dark Mode) ======== */
+:root {
+    --primary-color: #007AFF;
+    --primary-dark: #0056b3;
+
+    /* Light Mode Default */
+    --bg-color: #ffffff;
+    --text-color: #333;
+    --text-light: #667;
+    --hero-bg: #f4f7fc;
+    --card-bg: #ffffff;
+    --border-color: #e0e0e0;
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    --shadow-hover: 0 6px 20px rgba(0, 0, 0, 0.1);
+    --nav-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    --logo-color: var(--primary-color);
+}
+
+body.dark-mode {
+    /* Dark Mode Overrides */
+    --bg-color: #111827;
+    --text-color: #f9fafb;
+    --text-light: #9ca3af;
+    --hero-bg: #1f2937;
+    --card-bg: #1f2937;
+    --border-color: #374151;
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 6px 20px rgba(0, 0, 0, 0.15);
+    --nav-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    --logo-color: var(--primary-color);
+}
+
+/* ========================================================== */
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.7;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ======== UTILITIES (Buttons, etc.) ======== */
+
+/* [BARU] Animasi untuk tombol CTA */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(0, 122, 255, 0.7);
+    }
+
+    70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(0, 122, 255, 0);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(0, 122, 255, 0);
+    }
+}
+
+.btn-pulse {
+    animation: pulse 2s infinite ease-in-out;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    /* [DIUBAH] Selalu putih agar kontras di light/dark */
+}
+
+/* [BARU] Perbaikan kontras dark mode */
+body.dark-mode .btn-primary {
+    color: var(--text-color);
+    /* Pastikan teks putih di dark mode */
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.btn-outline:hover {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    /* [DIUBAH] Selalu putih */
+}
+
+/* [BARU] Perbaikan kontras dark mode */
+body.dark-mode .btn-outline:hover {
+    color: var(--text-color);
+    /* Pastikan teks putih di dark mode */
+}
+
+
+.btn-large {
+    padding: 15px 35px;
+    font-size: 1.1rem;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.section-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 3rem auto;
+}
+
+/* ======== HEADER / NAVBAR ======== */
+.navbar {
+    background: var(--bg-color);
+    padding: 1.2rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: var(--nav-shadow);
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.3s ease;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--logo-color);
+    text-decoration: none;
+}
+
+.navbar nav {
+    flex-grow: 1;
+    margin: 0 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2.5rem;
+}
+
+.navbar nav a {
+    text-decoration: none;
+    color: var(--text-light);
+    font-weight: 600;
+    transition: color 0.3s ease;
+    position: relative;
+    padding-bottom: 5px;
+}
+
+.navbar nav a:hover {
+    color: var(--primary-color);
+}
+
+.navbar nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.navbar nav a:hover::after {
+    width: 100%;
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* ======== DARK MODE SWITCH STYLES ======== */
+.dark-mode-switch {
+    display: flex;
+    align-items: center;
+}
+
+.dark-mode-switch label {
+    background-color: var(--hero-bg);
+    border-radius: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px;
+    position: relative;
+    height: 32px;
+    width: 60px;
+    border: 1px solid var(--border-color);
+}
+
+.dark-mode-switch .icon {
+    font-size: 18px;
+    line-height: 1;
+    color: #FFD60A;
+}
+
+.dark-mode-switch .icon.moon {
+    color: #90A4AE;
+}
+
+.dark-mode-switch label::after {
+    content: "";
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    position: absolute;
+    top: 3px;
+    left: 4px;
+    height: 24px;
+    width: 24px;
+    transition: transform 0.3s ease;
+}
+
+.dark-mode-switch input[type="checkbox"] {
+    display: none;
+}
+
+.dark-mode-switch input:checked+label::after {
+    transform: translateX(28px);
+}
+
+
+/* ======== HERO SECTION ======== */
+.hero-section {
+    background-color: var(--hero-bg);
+    padding: 6rem 0;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+}
+
+.hero-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 3rem;
+}
+
+.hero-text {
+    flex: 1;
+}
+
+.hero-text h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+}
+
+.hero-text p {
+    font-size: 1.15rem;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+}
+
+.hero-text .small-text {
+    display: block;
+    margin-top: 1rem;
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.hero-image {
+    flex: 1;
+}
+
+.hero-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* ======== FEATURE BAR SECTION ======== */
+.feature-bar-section {
+    background-color: #1f2937;
+    color: #f9fafb;
+    padding: 2.5rem 0;
+}
+
+.feature-bar-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.feature-bar-item {
+    text-align: center;
+    padding: 0 1.5rem;
+    border-right: 1px solid #4b5563;
+}
+
+.feature-bar-item:last-child {
+    border-right: none;
+}
+
+.feature-bar-item .icon {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.feature-bar-item h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.feature-bar-item p {
+    font-size: 0.95rem;
+    color: #d1d5db;
+    line-height: 1.5;
+}
+
+/* ======== [BARU] LOGO SLIDER STYLES ======== */
+.trusted-by-section {
+    padding: 4rem 0;
+    background-color: var(--hero-bg);
+}
+
+.trusted-by-section .container {
+    text-align: center;
+}
+
+.trusted-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-bottom: 2.5rem;
+}
+
+/* Container untuk fade & overflow */
+.logos-slider-container {
+    overflow: hidden;
+    width: 100%;
+    /* Efek fade di tepi kanan dan kiri */
+    mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+/* Track animasi */
+.logos-grid {
+    display: flex;
+    flex-wrap: nowrap;
+    width: max-content;
+    /* Sangat penting agar semua logo muat */
+    animation: scrollLogos 60s linear infinite;
+    /* Durasi animasi 60 detik */
+}
+
+/* Berhenti saat hover */
+.logos-slider-container:hover .logos-grid {
+    animation-play-state: paused;
+}
+
+/* Logo individual */
+.logos-grid img {
+    max-height: 40px;
+    margin: 0 2.5rem;
+    /* Jarak antar logo */
+    filter: grayscale(100%) opacity(0.6);
+    transition: all 0.3s ease;
+    object-fit: contain;
+    /* Pastikan logo tidak penyok */
+}
+
+.logos-grid img:hover {
+    filter: grayscale(0) opacity(1);
+}
+
+/* Perbaikan Dark Mode untuk logo */
+body.dark-mode .logos-grid img {
+    /* Ini akan membalik logo yang gelap menjadi putih */
+    filter: brightness(0) invert(1) opacity(0.6);
+}
+
+body.dark-mode .logos-grid img:hover {
+    filter: brightness(0) invert(1) opacity(1);
+}
+
+/* Catatan: Logo yg sudah berwarna (Puma/Adidas) akan ikut terbalik. 
+Ini adalah trade-off terbaik agar logo yg gelap (Jiwa Group/Kemendag) terlihat. */
+
+
+/* ======== WHY CHOOSE US SECTION ======== */
+.why-choose-us-section {
+    padding: 6rem 0;
+    background-color: var(--bg-color);
+}
+
+.why-us-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.why-us-image img {
+    max-width: 100%;
+    border-radius: 12px;
+    box-shadow: var(--shadow-hover);
+}
+
+.benefits-list {
+    list-style: none;
+    margin-top: 2rem;
+}
+
+.benefits-list li {
+    margin-bottom: 1.5rem;
+    padding-left: 2.5rem;
+    position: relative;
+}
+
+.benefits-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.benefits-list li strong {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text-color);
+    display: block;
+}
+
+.benefits-list li p {
+    color: var(--text-light);
+    font-size: 1rem;
+}
+
+/* ======== FEATURES SECTION ======== */
+.features-section {
+    padding: 6rem 0;
+    background-color: var(--bg-color);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.feature-card {
+    background: var(--card-bg);
+    padding: 2.5rem 2rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-hover);
+}
+
+.feature-card .icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.feature-card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.feature-card p {
+    color: var(--text-light);
+}
+
+/* ======== PRICING SECTION ======== */
+.pricing-section {
+    padding: 6rem 0;
+    background-color: var(--hero-bg);
+}
+
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    align-items: center;
+}
+
+.price-card {
+    background: var(--card-bg);
+    padding: 2.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.price-card h4 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.price-card .price {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.price-card .price small {
+    font-size: 1rem;
+    color: var(--text-light);
+    font-weight: 400;
+}
+
+.price-card>p {
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+    min-height: 40px;
+}
+
+.price-card ul {
+    list-style: none;
+    text-align: left;
+    margin-bottom: 2rem;
+    color: var(--text-color);
+}
+
+.price-card ul li {
+    margin-bottom: 0.8rem;
+}
+
+.price-card .btn {
+    width: 100%;
+}
+
+.price-card.recommended {
+    border: 3px solid var(--primary-color);
+    transform: scale(1.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.price-card .badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: var(--primary-color);
+    color: white;
+    padding: 5px 15px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transform: rotate(45deg) translate(25%, -100%);
+    transform-origin: top left;
+    width: 150px;
+    text-align: center;
+    right: -38px;
+    top: 15px;
+}
+
+/* ======== TESTIMONIALS SECTION ======== */
+.testimonial-section {
+    padding: 6rem 0;
+    background-color: var(--bg-color);
+}
+
+.testimonial-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.testimonial-content blockquote {
+    font-size: 1.5rem;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--text-color);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.testimonial-content blockquote::before {
+    content: '“';
+    font-size: 6rem;
+    color: var(--primary-color);
+    opacity: 0.2;
+    position: absolute;
+    top: -2rem;
+    left: -2rem;
+    z-index: -1;
+}
+
+.author {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.author img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.author p {
+    text-align: left;
+    line-height: 1.4;
+    color: var(--text-color);
+}
+
+/* ======== FINAL CTA SECTION ======== */
+.cta-section {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    padding: 5rem 0;
+    text-align: center;
+}
+
+.cta-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.cta-section p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 2rem;
+}
+
+.cta-section .btn-primary {
+    background: #ffffff;
+    color: var(--primary-color);
+    /* Teks biru di tombol putih */
+}
+
+.cta-section .btn-primary:hover {
+    background: var(--hero-bg);
+    color: var(--primary-dark);
+}
+
+/* ======== FOOTER ======== */
+.footer {
+    padding: 3rem 0;
+    background: #222;
+    color: #aaa;
+    border-top: 1px solid var(--border-color);
+}
+
+body.dark-mode .footer {
+    background: #111;
+}
+
+.footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-links a {
+    color: #aaa;
+    text-decoration: none;
+    margin-left: 1.5rem;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--bg-color);
+}
+
+/* ======== [BARU] KEYFRAME ANIMASI ======== */
+@keyframes scrollLogos {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        /* Pindah sejauh 50% karena kita punya 2 set logo */
+        transform: translateX(-50%);
+    }
+}
+
+/* ======== ANIMATION CLASSES (Scroll) ======== */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ======== RESPONSIVE DESIGN ======== */
+@media (max-width: 992px) {
+    .navbar .container {
+        flex-wrap: wrap;
+    }
+
+    .navbar nav {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        margin: 1rem 0 0 0;
+    }
+
+    .nav-actions {
+        order: 2;
+    }
+
+    .hero-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-image {
+        margin-top: 3rem;
+    }
+
+    .pricing-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .price-card.recommended {
+        transform: scale(1);
+    }
+
+    .why-us-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .why-us-image {
+        order: -1;
+        margin-bottom: 2rem;
+    }
+
+    .why-us-content .section-title,
+    .why-us-content .section-subtitle {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .hero-text h1 {
+        font-size: 2.5rem;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer .container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .feature-bar-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .feature-bar-item {
+        border-right: none;
+        border-bottom: 1px solid #4b5563;
+        padding-bottom: 1.5rem;
+    }
+
+    .feature-bar-item:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .navbar nav ul {
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-actions .btn-outline {
+        display: none;
+    }
+
+    .navbar nav ul {
+        gap: 1rem;
+    }
+}
