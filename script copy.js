@@ -3,17 +3,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // ======== LOGIKA DARK MODE ========
     const darkModeToggle = document.getElementById('darkModeToggle');
     const body = document.body;
-    const logo = document.getElementById('logo');
 
     function applyTheme(theme) {
         if (theme === 'dark') {
             body.classList.add('dark-mode');
             darkModeToggle.checked = true;
-            logo.src = 'TALEA_LOGO_TXT_H_white.png'; // Dark mode logo
         } else {
             body.classList.remove('dark-mode');
             darkModeToggle.checked = false;
-            logo.src = 'TALEA_LOGO_TXT_H.png'; // Light mode logo
         }
     }
     const savedTheme = localStorage.getItem('theme') || 'light';

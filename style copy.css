@@ -3,12 +3,6 @@
     --primary-color: #007AFF;
     --primary-dark: #0056b3;
 
-    /* Warna tambahan untuk blob */
-    --accent-color-1: #4F46E5;
-    /* Indigo */
-    --accent-color-2: #10B981;
-    /* Hijau Emerald */
-
     /* Light Mode Default */
     --bg-color: #ffffff;
     --text-color: #333;
@@ -23,12 +17,6 @@
 }
 
 body.dark-mode {
-    /* Warna tambahan untuk blob */
-    --accent-color-1: #6366F1;
-    /* Indigo lebih terang */
-    --accent-color-2: #34D399;
-    /* Hijau lebih terang */
-
     /* Dark Mode Overrides */
     --bg-color: #111827;
     --text-color: #f9fafb;
@@ -71,6 +59,7 @@ body {
 
 /* ======== UTILITIES (Buttons, etc.) ======== */
 
+/* [BARU] Animasi untuk tombol CTA */
 @keyframes pulse {
     0% {
         transform: scale(1);
@@ -106,10 +95,13 @@ body {
 .btn-primary {
     background-color: var(--primary-color);
     color: #ffffff;
+    /* [DIUBAH] Selalu putih agar kontras di light/dark */
 }
 
+/* [BARU] Perbaikan kontras dark mode */
 body.dark-mode .btn-primary {
     color: var(--text-color);
+    /* Pastikan teks putih di dark mode */
 }
 
 .btn-primary:hover {
@@ -127,10 +119,13 @@ body.dark-mode .btn-primary {
 .btn-outline:hover {
     background-color: var(--primary-color);
     color: #ffffff;
+    /* [DIUBAH] Selalu putih */
 }
 
+/* [BARU] Perbaikan kontras dark mode */
 body.dark-mode .btn-outline:hover {
     color: var(--text-color);
+    /* Pastikan teks putih di dark mode */
 }
 
 
@@ -178,10 +173,6 @@ body.dark-mode .btn-outline:hover {
     font-weight: 700;
     color: var(--logo-color);
     text-decoration: none;
-    max-width: 200px; /* Adjust the size as needed */
-    height: auto;
-    display: block;
-    margin: 0 auto; /* Center the logo horizontally */
 }
 
 .navbar nav {
@@ -283,81 +274,20 @@ body.dark-mode .btn-outline:hover {
 }
 
 
-/* ======== HERO SECTION (Dengan Animasi Blur) ======== */
+/* ======== HERO SECTION ======== */
 .hero-section {
+    background-color: var(--hero-bg);
     padding: 6rem 0;
     min-height: 90vh;
     display: flex;
     align-items: center;
-    position: relative;
-    overflow: hidden;
 }
-
-/* STYLES UNTUK ANIMASI BLUR BACKGROUND */
-.hero-blur-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    /* Di belakang konten hero */
-    background-color: var(--hero-bg);
-    overflow: hidden;
-}
-
-.blob {
-    position: absolute;
-    border-radius: 50%;
-    opacity: 0.4;
-    filter: blur(120px);
-    will-change: transform;
-}
-
-body.dark-mode .blob {
-    opacity: 0.25;
-    /* Redup di dark mode */
-}
-
-.blob1 {
-    width: 450px;
-    height: 450px;
-    background-color: var(--primary-color);
-    top: -15%;
-    left: -10%;
-    animation: moveBlob1 18s infinite alternate ease-in-out;
-}
-
-.blob2 {
-    width: 350px;
-    height: 350px;
-    background-color: var(--accent-color-1);
-    bottom: -10%;
-    right: -10%;
-    animation: moveBlob2 22s infinite alternate ease-in-out 3s;
-    /* Delay 3s */
-}
-
-.blob3 {
-    width: 300px;
-    height: 300px;
-    background-color: var(--accent-color-2);
-    bottom: 30%;
-    left: 20%;
-    animation: moveBlob3 20s infinite alternate ease-in-out;
-}
-
-/* ============================================= */
-
 
 .hero-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 3rem;
-    position: relative;
-    z-index: 2;
-    /* Konten di atas blur */
 }
 
 .hero-text {
@@ -437,7 +367,7 @@ body.dark-mode .blob {
     line-height: 1.5;
 }
 
-/* ======== LOGO SLIDER STYLES ======== */
+/* ======== [BARU] LOGO SLIDER STYLES ======== */
 .trusted-by-section {
     padding: 4rem 0;
     background-color: var(--hero-bg);
@@ -454,43 +384,57 @@ body.dark-mode .blob {
     margin-bottom: 2.5rem;
 }
 
+/* Container untuk fade & overflow */
 .logos-slider-container {
     overflow: hidden;
     width: 100%;
+    /* Efek fade di tepi kanan dan kiri */
     mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
     -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
 }
 
+/* Track animasi */
 .logos-grid {
     display: flex;
     flex-wrap: nowrap;
     width: max-content;
+    /* Sangat penting agar semua logo muat */
     animation: scrollLogos 60s linear infinite;
+    /* Durasi animasi 60 detik */
 }
 
+/* Berhenti saat hover */
 .logos-slider-container:hover .logos-grid {
     animation-play-state: paused;
 }
 
+/* Logo individual */
 .logos-grid img {
     max-height: 40px;
     margin: 0 2.5rem;
+    /* Jarak antar logo */
     filter: grayscale(100%) opacity(0.6);
     transition: all 0.3s ease;
     object-fit: contain;
+    /* Pastikan logo tidak penyok */
 }
 
 .logos-grid img:hover {
     filter: grayscale(0) opacity(1);
 }
 
+/* Perbaikan Dark Mode untuk logo */
 body.dark-mode .logos-grid img {
+    /* Ini akan membalik logo yang gelap menjadi putih */
     filter: brightness(0) invert(1) opacity(0.6);
 }
 
 body.dark-mode .logos-grid img:hover {
     filter: brightness(0) invert(1) opacity(1);
 }
+
+/* Catatan: Logo yg sudah berwarna (Puma/Adidas) akan ikut terbalik. 
+Ini adalah trade-off terbaik agar logo yg gelap (Jiwa Group/Kemendag) terlihat. */
 
 
 /* ======== WHY CHOOSE US SECTION ======== */
@@ -749,6 +693,7 @@ body.dark-mode .logos-grid img:hover {
 .cta-section .btn-primary {
     background: #ffffff;
     color: var(--primary-color);
+    /* Teks biru di tombol putih */
 }
 
 .cta-section .btn-primary:hover {
@@ -785,48 +730,17 @@ body.dark-mode .footer {
     color: var(--bg-color);
 }
 
-/* ======== KEYFRAME ANIMASI (Logo) ======== */
+/* ======== [BARU] KEYFRAME ANIMASI ======== */
 @keyframes scrollLogos {
     0% {
         transform: translateX(0);
     }
 
     100% {
+        /* Pindah sejauh 50% karena kita punya 2 set logo */
         transform: translateX(-50%);
     }
 }
-
-/* KEYFRAME ANIMASI (Blob) */
-@keyframes moveBlob1 {
-    from {
-        transform: translate(-20%, 10%) scale(1);
-    }
-
-    to {
-        transform: translate(30%, -20%) scale(1.1);
-    }
-}
-
-@keyframes moveBlob2 {
-    from {
-        transform: translate(10%, -10%) scale(0.9);
-    }
-
-    to {
-        transform: translate(-20%, 20%) scale(1.2);
-    }
-}
-
-@keyframes moveBlob3 {
-    from {
-        transform: translate(0, 0) scale(1.1);
-    }
-
-    to {
-        transform: translate(30%, -30%) scale(1);
-    }
-}
-
 
 /* ======== ANIMATION CLASSES (Scroll) ======== */
 .animate-on-scroll {
@@ -892,15 +806,6 @@ body.dark-mode .footer {
 }
 
 @media (max-width: 768px) {
-    .navbar .container {
-        flex-wrap: wrap;
-        justify-content: center; /* Center the navbar content */
-    }
-
-    .logo {
-        margin-bottom: 1rem; /* Add spacing below the logo */
-    }
-
     .section-title {
         font-size: 2rem;
     }
@@ -938,22 +843,6 @@ body.dark-mode .footer {
         gap: 1.5rem;
         flex-wrap: wrap;
         justify-content: center;
-    }
-
-    /* Perkecil blob di mobile */
-    .blob1 {
-        width: 300px;
-        height: 300px;
-    }
-
-    .blob2 {
-        width: 200px;
-        height: 200px;
-    }
-
-    .blob3 {
-        width: 150px;
-        height: 150px;
     }
 }
 
